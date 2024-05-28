@@ -59,7 +59,7 @@ animations = [{
 collision_layer = 4
 collision_mask = 7
 script = ExtResource("1_jljls")
-Jump_Peak_Time = 0.3
+Jump_Peak_Time = 0.4
 Jump_Fall_Time = 0.8
 Jump_Height = 7.0
 Jump_Distance = 9.0
@@ -98,7 +98,7 @@ grow_vertical = 0
 position = Vector2(316, -136)
 scale = Vector2(0.71875, 0.71875)
 sprite_frames = SubResource("SpriteFrames_wmy0h")
-animation = &"shoot"
+animation = &"idle"
 
 [node name="crosshair" type="ColorRect" parent="CanvasLayer"]
 anchors_preset = 8
@@ -185,4 +185,5 @@ collide_with_areas = true
 
 [node name="dashSound" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("4_178t6")
+volume_db = -12.339
 bus = &"sfx"

@@ -6,12 +6,10 @@ extends CharacterBody3D
 @onready var dash_sound = $dashSound
 @onready var Camera: Camera3D = $Camera3D
 
-const JUMP_VELOCITY = 7.0
-
 var CameraRotation = Vector2(0.0,0.0)
 var MouseSensitivity = 0.002
 
-var Speed = 10.0
+var Speed = 0
 var Run_bonus = 10
 
 @export_category("Movement Parameters")
@@ -112,7 +110,6 @@ func _physics_process(delta):
 	if Input.is_action_just_pressed("jump") and jump_count < jump_max and !dashing :
 		velocity.y = Jump_Velocity
 		jump_count += 1
-		print(jump_count)
 
 	# Get the input direction and handle the movement/deceleration.
 	# As good practice, you should replace UI actions with custom gameplay actions.
@@ -129,19 +126,16 @@ func _physics_process(delta):
 		dash_duration -= delta
 	
 	if dashing and dash_duration <= 0:
-		print('stop dash')
 		dashing = false
 		Speed -= dash_speed
 		dash_sound.stop()
 	
 	if Input.is_action_just_pressed("dash"):
 		if !dashing and dash_number < dash_max :
-			print('dash')
 			velocity.y = 0
 			dashing = true
 			Speed += dash_speed
 			dash_duration = default_dash_duration
-			print(dash_duration)
 			dash_number += 1
 		elif dashing:
 			dashing = false
@@ -175,7 +169,10 @@ func CameraLook(Movement: Vector2):
 	
 	transform.basis = Basis()
 	Camera.transform.basis = Basis()
+	ray_cast_3d.transform.basis = Basis()
 	
 	rotate_object_local(Vector3(0,1,0),-CameraRotation.x) # first rotate in Y
 	Camera.rotate_object_local(Vector3(1,0,0), -CameraRotation.y) # then rotate in X
+	ray_cast_3d.rotate_object_local(Vector3(1,0,0), -CameraRotation.y)
+	
 	CameraRotation.y = clamp(CameraRotation.y,-1.5,1.2)
